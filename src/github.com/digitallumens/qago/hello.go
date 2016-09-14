@@ -17,6 +17,7 @@ import (
 	//"strings"
 	//"strconv"
 	//"github.com/tarm/serial"
+	"runtime"
 )
 
 func main() {
@@ -36,8 +37,11 @@ func main() {
 	}
 
 	s.Flush()
-
-
+	fmt.Printf("number of cpus = \n")
+	fmt.Printf( "%d", runtime.NumCPU())
+	fmt.Printf("\n")
+	fmt.Printf(runtime.GOROOT())
+	fmt.Printf("\n")
 
 
         counter := 0
