@@ -24,6 +24,8 @@ import (
 	//"syscall"
 	//"errors"
 	"github.com/tarm/serial"
+	"github.com/digitallumens/dllibgo"
+
 )
 
 func main() {
@@ -43,8 +45,14 @@ func main() {
 
 
 			c := &serial.Config{Name: file.Name(), Baud: 115200, ReadTimeout: 20}
-			fmt.Printf(c.Name + "\n")
+			fmt.Printf("c.Name = \n")
 			fmt.Printf("%s\n", c.Name)
+			g, err := dllibgo.NewEZSPGateway("/dev/cu.SLAB_USBtoUART")
+			if err != nil {
+				fmt.Printf("NewEZSPGateway failed: %s", err)
+			}
+			g.JoinNetwork("B16")
+
 			//s, err := serial.OpenPort(file)
 			if err != nil {
 				fmt.Printf("got an error")
