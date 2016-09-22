@@ -23,7 +23,7 @@ import (
 	//"github.com/tarm/serial"
 	//"syscall"
 	//"errors"
-	"github.com/tarm/serial"
+	//"github.com/tarm/serial"
 	"github.com/digitallumens/dllibgo"
 
 )
@@ -33,6 +33,7 @@ func main() {
 	//fmt.Printf(serial_port)
 	//c := &serial.Config{Name: serial_port, Baud: 115200, ReadTimeout: 20}
 	//fmt.Printf(c.Name + "\n")
+	var ok bool
 	files, err := ioutil.ReadDir("/dev")
 	if err != nil {
 		log.Fatal(err)
@@ -43,23 +44,63 @@ func main() {
 		if strings.Contains(file.Name(), "cu.SLAB_USBtoUART") {
 			//fmt.Printf(file.Name() + "\n")
 
+			testName := "/dev/tty.SLAB_USBtoUART"
+			//testName := "/dev/cu.SLAB_USBtoUART"
+			//c := &serial.Config{Name: file.Name(), Baud: 115200, ReadTimeout: 20}
+			//c := &serial.Config{Name: testName, Baud: 115200, ReadTimeout: 20}
+			//fmt.Printf("c.Name = \n")
+			//fmt.Printf("%s\n", c.Name)
 
-			c := &serial.Config{Name: file.Name(), Baud: 115200, ReadTimeout: 20}
-			fmt.Printf("c.Name = \n")
-			fmt.Printf("%s\n", c.Name)
-			g, err := dllibgo.NewEZSPGateway("/dev/cu.SLAB_USBtoUART")
+			//g, err := dllibgo.NewEZSPGateway("/dev/cu.SLAB_USBtoUART")
+			g, err := dllibgo.NewEZSPGateway(testName)
 			if err != nil {
 				fmt.Printf("NewEZSPGateway failed: %s", err)
 			}
+
+			fmt.Printf("before join network \n")
 			g.JoinNetwork("B16")
 
-			//s, err := serial.OpenPort(file)
-			if err != nil {
-				fmt.Printf("got an error")
-				log.Fatal(err)
+			fmt.Printf("after join network\n")
+			fmt.Println("g.isJoined() = ")
+			fmt.Printf("%t",g.IsJoined())
+			var sn   uint32
+			sn = uint32(67220938)
+			var addr uint16
+			if addr, ok = g.NodeAddressFromSerialNumber(sn); !ok {
+				addr, err = g.FindNodeAddress(sn)
+				if err != nil {
+					fmt.Printf("Unable to find node address for sn 0x%08X", sn)
+
+				}
+			}
+
+			node := g.NewNode(sn, addr)
+			fmt.Println("mymessage node.GetName = \n")
+			fmt.Println(node.GetName())
+			fmt.Println("mymessage node.GetRegister(uint16(2))  = ")
+			fmt.Println(node.GetRegister(uint16(2)))
+			//fmt.Println("leaving network")
+			//g.LeaveNetwork()
+			//fmt.Println(node.GetRegister(uint16(2)))
+			//n, err := s.Write([]byte("G0002\r"))
+			//if err != nil {
+			//	log.Fatal(err)
+			//}
+			//fmt.Printf("I wrote this number of bytes \n")
+			//fmt.Printf("%d", n)
+			//fmt.Printf("\n")
+			//fmt.Printf("before read  \n")
+			//
+			////s, err := serial.OpenPort(file)
+			//if err != nil {
+			//	fmt.Printf("got an error")
+			//	log.Fatal(err)
+			//	}
+
+
+
 			}
 		}
-	}
 
 
 
