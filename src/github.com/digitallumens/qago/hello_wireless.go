@@ -3,7 +3,7 @@ package main
 import "fmt"
 import (
 	//"github.com/tarm/serial"
-	"log"
+	"github.com/op/go-logging"
 
 	//"time"
 	//"bufio"
@@ -26,9 +26,15 @@ import (
 	//"github.com/tarm/serial"
 	"github.com/digitallumens/dllibgo"
 
-)
 
+)
+var log = logging.MustGetLogger("main")
+const format = "%{color}[%{time:15:01:03.000} %{level}]%{color:reset}[%{module}-%{shortfile}] %{message}"
 func main() {
+	logging.SetFormatter(logging.MustStringFormatter(format))
+	logging.SetLevel(logging.ERROR, "")
+	logging.SetLevel(logging.DEBUG, "main")
+	logging.SetLevel(logging.ERROR, "atecc108")
 	//serial_port := find_usb_modem()
 	//fmt.Printf(serial_port)
 	//c := &serial.Config{Name: serial_port, Baud: 115200, ReadTimeout: 20}
@@ -77,25 +83,30 @@ func main() {
 			node := g.NewNode(sn, addr)
 			fmt.Println("mymessage node.GetName = \n")
 			fmt.Println(node.GetName())
-			fmt.Println("mymessage node.GetRegister(uint16(2))  = ")
-			fmt.Println(node.GetRegister(uint16(2)))
-			//fmt.Println("leaving network")
-			//g.LeaveNetwork()
-			//fmt.Println(node.GetRegister(uint16(2)))
-			//n, err := s.Write([]byte("G0002\r"))
-			//if err != nil {
-			//	log.Fatal(err)
-			//}
-			//fmt.Printf("I wrote this number of bytes \n")
-			//fmt.Printf("%d", n)
-			//fmt.Printf("\n")
-			//fmt.Printf("before read  \n")
-			//
-			////s, err := serial.OpenPort(file)
-			//if err != nil {
-			//	fmt.Printf("got an error")
-			//	log.Fatal(err)
-			//	}
+			fmt.Println("mymessage node.GetRegister(uint16(0002))  = ")
+			fmt.Println(node.GetRegister(uint16(0002)))
+			fmt.Println("mymessage node.GetRegister(uint16(0000))  = ")
+			fmt.Println(node.GetRegister(uint16(0000)))
+			fmt.Println("before for loop")
+			for i := 0; i < 0x007F; i++ {
+
+				v, err := node.GetRegister(uint16(i))
+				if err != nil {
+					fmt.Printf("\noops\n")
+					fmt.Printf("%04X: %s", i, err)
+
+				} else {
+					//fmt.Printf("%04X: %X", i, v)
+					fmt.Printf("register number: %04X = ", i)
+					fmt.Printf("%X", v)
+					fmt.Printf("\n")
+
+				}
+			}
+			fmt.Println("after for loop")
+			fmt.Println("leaving network")
+			g.LeaveNetwork()
+
 
 
 
