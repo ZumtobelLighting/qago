@@ -70,13 +70,18 @@ func main() {
 	fmt.Printf("\n")
 	fmt.Printf("Mode = %v", result.GetSetup().GetMode())
 	fmt.Printf("\n")
-	fmt.Printf("Setup.String = %v", result.GetSetup().String)
+	fmt.Printf("Setup.String = %v", result.GetSetup().String())
 	fmt.Printf("\n")
 	fmt.Printf("IPv4Address = %v", result.GetEthernet().GetIPv4Address())
 	fmt.Printf("\n")
 	fmt.Printf("IPv4Netmask = %v", result.GetEthernet().GetIPv4Netmask())
 	fmt.Printf("\n")
 	fmt.Printf("IPv4Method = %v", result.GetEthernet().GetIPv4Method())
+	fmt.Printf("\n")
+	fmt.Printf("State = %v", result.GetEthernet().GetState())
+	fmt.Printf("\n")
+
+
 
 
 
