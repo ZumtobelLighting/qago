@@ -6,12 +6,14 @@ import (
 	"github.com/op/go-logging"
 	"time"
 	"strings"
+	"os"
 )
 
 var log = logging.MustGetLogger("main")
 
 func Lightrules_general_settings(browser agouti.Page){
-      	test__1_minimum_active_6387(browser)
+      	//test__1_minimum_active_6387(browser)
+	test_2_DH_reporting_ok_6388(browser)
 
 
 
@@ -30,6 +32,11 @@ func test__1_minimum_active_6387(browser agouti.Page){
 	LR_comment := "agouti testing 111\n"
 	result := false
 	log.Info("\nin test__1_minimum_active_6387\n")
+	pwd, err := os.Getwd()
+	    if err != nil {
+		log.Error("error in os.Getwd")
+	    }
+	log.Infof("%v", pwd)
 	browser.FindByLink("Admin").Click()
 	time.Sleep(2 * time.Second)
 	browser.FindByLink("General").Click()
@@ -62,6 +69,53 @@ func test__1_minimum_active_6387(browser agouti.Page){
 
 
 
+}
+
+
+func test_2_DH_reporting_ok_6388(browser agouti.Page){
+	LR_case_id := 6387
+	LR_comment := "agouti testing 111\n"
+	result := false
+	log.Info("\nin test_2_DH_reporting_ok_6388\n")
+
+	Upload_map(browser, "dh_none.map")
+	browser.FindByLink("Admin").Click()
+	time.Sleep(2 * time.Second)
+	browser.FindByLink("General").Click()
+	edit_general_element := browser.FindByLink("Edit General Settings")
+	edit_general_element.Click()
+	dh_element := browser.FirstByXPath("//*[@id='site_config_daylight_harvesting_enabled_input']/p")
+	log.Info(dh_element.Text())
+
+	// update testrail
+	log.Infof("result = %v \n", result)
+	Update_testrail(result, LR_case_id, LR_comment )
+
+}
+
+func Upload_map(browser agouti.Page, mapname string){
+	log.Info("in Upload_map")
+	browser.FindByLink("Admin").Click()
+	time.Sleep(2 * time.Second)
+	browser.FindByLink("Config").Click()
+	time.Sleep(2 * time.Second)
+	browser.FindByLink("Manage Map File").Click()
+	time.Sleep(2 * time.Second)
+	pwd, err := os.Getwd()
+	    if err != nil {
+		log.Error("error in os.Getwd")
+	    }
+	log.Infof("%v", pwd)
+	filename := pwd + "/" + mapname
+	log.Infof("filename = %v", filename)
+	mapname_element := browser.FindByID("map_filename")
+	mapname_element.SendKeys(filename)
+	commit_element := browser.FindByName("commit")
+	commit_element.Click()
+	time.Sleep(3 * time.Second)
+	commit_element_1 := browser.FindByName("commit")
+	commit_element_1.Click()
+	time.Sleep(30 * time.Second)
 
 }
 
