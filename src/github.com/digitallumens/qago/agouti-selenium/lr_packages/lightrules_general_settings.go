@@ -29,9 +29,9 @@ func Lightrules_general_settings(browser agouti.Page){
 
 func test__1_minimum_active_6387(browser agouti.Page){
 	LR_case_id := 6387
-	LR_comment := "agouti testing 111"
+	LR_comment := "agouti testing 111\n"
 	result := false
-	fmt.Println("in test__1_minimum_active_6387")
+	fmt.Println("\nin test__1_minimum_active_6387\n")
 	browser.FindByLink("Admin").Click()
 	time.Sleep(2 * time.Second)
 	browser.FindByLink("General").Click()
@@ -41,10 +41,10 @@ func test__1_minimum_active_6387(browser agouti.Page){
 		fmt.Println("cannot find General Settings title")
 	}
 	if strings.Contains(title_element, "General Settings"){
-		fmt.Println("found General Settings")
+		fmt.Println("found General Settings\n")
 
 	} else{
-		fmt.Println("cannot find General Settings wrong page")
+		fmt.Println("cannot find General Settings wrong page\n")
 	}
 	buttons := browser.AllByClass("button")
 	buttons.At(5).Click()
@@ -58,7 +58,7 @@ func test__1_minimum_active_6387(browser agouti.Page){
 		 result = true
 
 	}
-	fmt.Printf("result = %v", result)
+	fmt.Printf("result = %v \n", result)
 
 	Update_testrail(result, LR_case_id, LR_comment )
 
