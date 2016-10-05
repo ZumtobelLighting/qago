@@ -5,9 +5,11 @@ import (
 
 
 	"github.com/digitallumens/qago/agouti-selenium/lr_packages"
+
 )
 
 func main() {
+
 	browser := lr_packages.Lightrules_login()
 	lr_packages.Lightrules_general_settings(browser)
 
@@ -18,3 +20,4 @@ func main() {
 	//	fmt.Println("Failed to close pages and stop WebDriver:")
 	//}
 }
+

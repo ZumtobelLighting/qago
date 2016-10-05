@@ -28,8 +28,9 @@ func Lightrules_general_settings(browser agouti.Page){
 
 
 func test__1_minimum_active_6387(browser agouti.Page){
-	//LR_case_id := '6387'
-	result := 0
+	LR_case_id := 6387
+	LR_comment := "agouti testing 111"
+	result := false
 	fmt.Println("in test__1_minimum_active_6387")
 	browser.FindByLink("Admin").Click()
 	time.Sleep(2 * time.Second)
@@ -52,16 +53,14 @@ func test__1_minimum_active_6387(browser agouti.Page){
 	if err != nil {
 		fmt.Printf("error")
 	}
-        fmt.Printf("%v", min_active_level)
+        //fmt.Printf("%v", min_active_level)
 	if min_active_level == "20" {
-		 result = 1
-		fmt.Printf("%v", result)
-	} else{
-		result = 0
-		fmt.Printf("%v", result)
-		}
+		 result = true
+
+	}
 	fmt.Printf("result = %v", result)
-	Update_testrail()
+
+	Update_testrail(result, LR_case_id, LR_comment )
 
 
 
