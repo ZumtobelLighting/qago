@@ -1,22 +1,22 @@
 package lr_packages
 
 import (
-	//"github.com/Etienne42/testrail"
-	//"os"
+
 	"fmt"
 	"github.com/Etienne42/testrail"
-	//"log"
-	//"net/http"
-	//"net/url"
-	//"runtime"
+
+
 
 
 )
 
-//update_testrail(result, LR_case_id, LR_comment, run_id)
+
+
 func Update_testrail( result bool, LR_case_id int, LR_comment string, ) {
 	username := "dlqaautomation@gmail.com"
 	password := "Test!ng16"
+
+	log.Info("in Update_testrail")
 	//projectID := 2
 	//suiteID := 1032
 
@@ -36,7 +36,7 @@ func Update_testrail( result bool, LR_case_id int, LR_comment string, ) {
 
 	//
 	//myresult := testrail.SendableResult{StatusID: 1, Comment: "testing with Golang"}
-	testrail_result := testrail.SendableResult{StatusID: 1, Comment: LR_comment}
+	testrail_result := testrail.SendableResult{StatusID: numericResult, Comment: LR_comment}
 	//fmt.Printf("%d\n", testrail_result.StatusID)
 	//client.AddResultForCase(2838, 46759, testrail_result)
 
@@ -45,6 +45,7 @@ func Update_testrail( result bool, LR_case_id int, LR_comment string, ) {
 		fmt.Printf("testrail update failed\n")
 		fmt.Printf("%v", err)
 	}
-	fmt.Printf("testrail update succeeded %v", testrailUpdateResult)
+	//fmt.Printf("testrail update succeeded %v", testrailUpdateResult)
+	log.Infof("testrail update succeeded %v", testrailUpdateResult)
 
 }

@@ -3,7 +3,6 @@ package lr_packages
 import (
 	"github.com/sclevine/agouti"
 	"fmt"
-	"log"
 	"os"
 )
 
@@ -28,21 +27,21 @@ func Lightrules_login() agouti.Page{
 	browser.Navigate("http://10.1.30.126/login")
 	email_element := browser.FirstByClass("email")
 	if email_element == nil {
-		fmt.Println("Failed to find email_element")
+		log.Error("Failed to find email_element")
 	}
 
 	email_element.SendKeys("lightrules@digitallumens.com")
 	//
 	password_element := browser.FirstByClass("password")
 	if password_element == nil {
-		fmt.Println("Failed to find password_element")
+		log.Error("Failed to find password_element")
 	}
 	password_element.SendKeys(os.Getenv("LRPASSWORD"))
 
 //
 	login_element := browser.FirstByClass("log-in")
 	if password_element == nil {
-		fmt.Println("Failed to find login_element")
+		log.Error("Failed to find login_element")
 	}
 	login_element.Click()
 	return(*browser)

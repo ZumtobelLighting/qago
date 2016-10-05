@@ -3,14 +3,12 @@ package lr_packages
 import (
 	"github.com/sclevine/agouti"
 	"fmt"
-	//"log"
-	//"os"
-
-	//"time"
+	"github.com/op/go-logging"
 	"time"
 	"strings"
 )
 
+var log = logging.MustGetLogger("main")
 
 func Lightrules_general_settings(browser agouti.Page){
       	test__1_minimum_active_6387(browser)
@@ -31,7 +29,7 @@ func test__1_minimum_active_6387(browser agouti.Page){
 	LR_case_id := 6387
 	LR_comment := "agouti testing 111\n"
 	result := false
-	fmt.Println("\nin test__1_minimum_active_6387\n")
+	log.Info("\nin test__1_minimum_active_6387\n")
 	browser.FindByLink("Admin").Click()
 	time.Sleep(2 * time.Second)
 	browser.FindByLink("General").Click()
@@ -58,7 +56,7 @@ func test__1_minimum_active_6387(browser agouti.Page){
 		 result = true
 
 	}
-	fmt.Printf("result = %v \n", result)
+	log.Infof("result = %v \n", result)
 
 	Update_testrail(result, LR_case_id, LR_comment )
 
